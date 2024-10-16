@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxr.petManagement.mapper.PetMapper">
+
+    <resultMap id="BaseResultMap" type="com.yxr.petManagement.domain.entity.Pet">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="INTEGER"/>
+            <result property="petName" column="petName" jdbcType="VARCHAR"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="sex" column="sex" jdbcType="CHAR"/>
+            <result property="state" column="state" jdbcType="VARCHAR"/>
+            <result property="isSterilized" column="isSterilized" jdbcType="TINYINT"/>
+            <result property="isVaccination" column="isVaccination" jdbcType="TINYINT"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,petName,
+        age,sex,state,
+        isSterilized,isVaccination,description,
+        type,createTime,updateTime
+    </sql>
+</mapper>

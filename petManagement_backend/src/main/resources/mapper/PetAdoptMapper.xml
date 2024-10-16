@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxr.petManagement.mapper.PetAdoptMapper">
+
+    <resultMap id="BaseResultMap" type="com.yxr.petManagement.domain.entity.PetAdopt">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="INTEGER"/>
+            <result property="petId" column="petId" jdbcType="INTEGER"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,petId,
+        createTime,updateTime
+    </sql>
+</mapper>
