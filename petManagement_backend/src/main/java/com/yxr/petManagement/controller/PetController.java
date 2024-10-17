@@ -8,10 +8,12 @@ import com.yxr.petManagement.common.ResultUtils;
 import com.yxr.petManagement.domain.entity.Pet;
 import com.yxr.petManagement.domain.entity.PetDonate;
 import com.yxr.petManagement.domain.entity.User;
+import com.yxr.petManagement.domain.vo.PetVO;
 import com.yxr.petManagement.exception.BusinessException;
 import com.yxr.petManagement.service.PetDonateService;
 import com.yxr.petManagement.service.PetService;
 import com.yxr.petManagement.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,5 +60,18 @@ public class PetController {
         petDonateService.remove(queryWrapperPetDonate);
         return ResultUtils.success(b);
     }
+
+    @GetMapping("/detail/{id}")
+    public BaseResponse<PetVO> getPetDetailById(@PathVariable("id") Integer id) {
+        Pet pet = petService.getById(id);
+        Integer userId = pet.getUserId();
+        User user = userService.getById(userId);
+        User safetyUser = userService.getSafetyUser(user);
+        PetVO petVO = new PetVO();
+        petVO.setUser(safetyUser);
+        BeanUtils.copyProperties(pet, petVO);
+        return ResultUtils.success(petVO);
+    }
+
 
 }

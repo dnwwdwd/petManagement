@@ -32,6 +32,11 @@ public class Pet implements Serializable {
     private String petName;
 
     /**
+     * 宠物头像
+     */
+    private String avatarUrl;
+
+    /**
      * 年龄
      */
     private Integer age;

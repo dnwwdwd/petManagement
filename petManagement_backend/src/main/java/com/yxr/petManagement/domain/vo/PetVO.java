@@ -1,7 +1,6 @@
 package com.yxr.petManagement.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.yxr.petManagement.domain.entity.User;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,8 +10,7 @@ public class PetVO implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     /**
      * 用户id
@@ -23,6 +21,11 @@ public class PetVO implements Serializable {
      * 宠物名称
      */
     private String petName;
+
+    /**
+     * 宠物头像
+     */
+    private String avatarUrl;
 
     /**
      * 年龄
@@ -54,5 +57,5 @@ public class PetVO implements Serializable {
      */
     private String description;
 
-    private String nickname;
+    private User user;
 }

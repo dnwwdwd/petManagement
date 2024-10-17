@@ -1,6 +1,7 @@
 server:
   port: 9090
-
+  servlet:
+    context-path: /api
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,6 +18,7 @@ mybatis:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 mybatis-plus:
   configuration:
+    map-underscore-to-camel-case: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 files:

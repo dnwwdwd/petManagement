@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="userId" jdbcType="INTEGER"/>
             <result property="petName" column="petName" jdbcType="VARCHAR"/>
+            <result property="avatarUrl" column="avatarUrl" jdbcType="VARCHAR"/>
             <result property="age" column="age" jdbcType="INTEGER"/>
             <result property="sex" column="sex" jdbcType="CHAR"/>
             <result property="state" column="state" jdbcType="VARCHAR"/>

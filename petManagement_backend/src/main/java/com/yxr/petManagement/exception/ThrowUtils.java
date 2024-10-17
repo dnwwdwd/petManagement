@@ -1,6 +1,6 @@
 package com.yxr.petManagement.exception;
 
-import com.hjj.interviewdog.common.ErrorCode;
+import com.yxr.petManagement.common.ErrorCode;
 
 /**
  * 抛异常工具类

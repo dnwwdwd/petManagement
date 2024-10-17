@@ -39,7 +39,7 @@ public class PetDonateServiceImpl extends ServiceImpl<PetDonateMapper, PetDonate
             PetVO petVO = new PetVO();
             Integer userId = pet.getUserId();
             User user = userService.getById(userId);
-            petVO.setNickname(user.getNickname());
+            petVO.setUser(userService.getSafetyUser(user));
             BeanUtils.copyProperties(pet, petVO);
             return petVO;
         }).collect(Collectors.toList());

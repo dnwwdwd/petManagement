@@ -93,7 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
 
-    private User getSafetyUser(User user) {
+    @Override
+    public User getSafetyUser(User user) {
         Integer id = user.getId();
         String username = user.getUsername();
         String nickname = user.getNickname();

@@ -43,7 +43,7 @@ public class PetAdoptServiceImpl extends ServiceImpl<PetAdoptMapper, PetAdopt>
         List<Pet> pets = petService.list(queryWrapper);
         return pets.stream().map(pet -> {
             PetVO petVO = new PetVO();
-            petVO.setNickname(loginUser.getNickname());
+            petVO.setUser(userService.getSafetyUser(userService.getById(pet.getUserId())));
             BeanUtils.copyProperties(pet, petVO);
             return petVO;
         }).collect(Collectors.toList());

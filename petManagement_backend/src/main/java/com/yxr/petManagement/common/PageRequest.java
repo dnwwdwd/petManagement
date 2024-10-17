@@ -1,6 +1,5 @@
 package com.yxr.petManagement.common;
 
-import com.hjj.interviewdog.constant.CommonConstant;
 import lombok.Data;
 
 /**
@@ -24,9 +23,4 @@ public class PageRequest {
      * 排序字段
      */
     private String sortField;
-
-    /**
-     * 排序顺序（默认升序）
-     */
-    private String sortOrder = CommonConstant.SORT_ORDER_ASC;
 }

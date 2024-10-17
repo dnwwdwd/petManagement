@@ -5,20 +5,16 @@
 <mapper namespace="com.yxr.petManagement.mapper.PetDonateMapper">
 
     <resultMap id="BaseResultMap" type="com.yxr.petManagement.domain.entity.PetDonate">
-            <id property="id" column="id" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="petId" column="petId" jdbcType="INTEGER"/>
             <result property="userId" column="userId" jdbcType="INTEGER"/>
-            <result property="petName" column="petName" jdbcType="VARCHAR"/>
-            <result property="age" column="age" jdbcType="INTEGER"/>
-            <result property="sex" column="sex" jdbcType="CHAR"/>
-            <result property="state" column="state" jdbcType="VARCHAR"/>
-            <result property="isSterilized" column="isSterilized" jdbcType="TINYINT"/>
-            <result property="isVaccination" column="isVaccination" jdbcType="TINYINT"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="isAdopted" column="isAdopted" jdbcType="INTEGER"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userId,petName,
-        age,sex,state,
-        isSterilized,isVaccination,description
+        id,petId,userId,
+        createTime,updateTime
     </sql>
 </mapper>
