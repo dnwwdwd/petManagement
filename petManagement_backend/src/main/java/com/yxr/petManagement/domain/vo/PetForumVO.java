@@ -4,6 +4,7 @@ import com.yxr.petManagement.domain.entity.User;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PetForumVO implements Serializable {
@@ -28,6 +29,10 @@ public class PetForumVO implements Serializable {
     private String description;
 
     private User user;
+
+    private Integer commentNum;
+
+    private List<CommentVO> commentVOs;
 
     private static final long serialVersionUID = 1L;
 }

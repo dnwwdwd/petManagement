@@ -1,8 +1,9 @@
 <template>
   <div style="max-width: 80%; margin: auto;">
-    <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData" bordered>
+    <a-list item-layout="vertical" size="large" bordered :pagination="pagination" :data-source="listData"
+            v-if="listData && listData.length > 0">
       <template #renderItem="{ item }">
-        <a-list-item key="item.title" @click="router.push(`/pet/forum/detail/${item.id}`)">
+        <a-list-item key="item.title" @click="router.push(`/activity/detail/${item.id}`)">
           <template #extra>
             <img
                 height="100px"
@@ -20,6 +21,12 @@
         </a-list-item>
       </template>
     </a-list>
+  </div>
+  <div
+      v-if="!listData || listData.length < 1"
+      style="display: flex; justify-content: center; align-items: center;"
+  >
+    <a-empty :description="`暂无活动`"/>
   </div>
 </template>
 <script lang="js" setup>
@@ -39,7 +46,7 @@ const pagination = {
 };
 
 const loadData = async (page) => {
-  const res = await myAxios.get(`/pet/forum/list`, {
+  const res = await myAxios.get('/activity/list', {
     pageSize: pagination.pageSize,
     pageNum: page,
   });

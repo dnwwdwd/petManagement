@@ -1,16 +1,14 @@
 package com.yxr.petManagement.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.yxr.petManagement.common.BaseResponse;
 import com.yxr.petManagement.common.DeleteRequest;
 import com.yxr.petManagement.common.ErrorCode;
 import com.yxr.petManagement.common.ResultUtils;
 import com.yxr.petManagement.domain.entity.Pet;
-import com.yxr.petManagement.domain.entity.PetDonate;
 import com.yxr.petManagement.domain.entity.User;
 import com.yxr.petManagement.domain.vo.PetVO;
 import com.yxr.petManagement.exception.BusinessException;
-import com.yxr.petManagement.service.PetDonateService;
 import com.yxr.petManagement.service.PetService;
 import com.yxr.petManagement.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -28,9 +26,6 @@ public class PetController {
 
     @Resource
     private UserService userService;
-
-    @Resource
-    private PetDonateService petDonateService;
 
     @GetMapping("/list")
     public BaseResponse<List<Pet>> listPets() {
@@ -53,11 +48,7 @@ public class PetController {
         if (!userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        int petId = deleteRequest.getId();
-        boolean b = petService.removeById(petId);
-        QueryWrapper<PetDonate> queryWrapperPetDonate = new QueryWrapper<>();
-        queryWrapperPetDonate.eq("petId", petId);
-        petDonateService.remove(queryWrapperPetDonate);
+        boolean b = petService.removeById(deleteRequest.getId());
         return ResultUtils.success(b);
     }
 
@@ -73,5 +64,12 @@ public class PetController {
         return ResultUtils.success(petVO);
     }
 
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updatePet(@RequestBody Pet pet, HttpServletRequest request) {
+        if (!userService.isAdmin(request)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        return ResultUtils.success(petService.updateById(pet));
+    }
 
 }

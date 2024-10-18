@@ -1,5 +1,5 @@
 import myAxios from "../plugins/myAxios";
-import {getCurrentUserState, setCurrentUserState} from "../states/user.ts";
+import {getCurrentUserState, setCurrentUserState} from "../states/user";
 
 export const getCurrentUser = async () => {
     const currentUser = getCurrentUserState();

@@ -3,8 +3,9 @@
     <a-layout-header :style="{ background: '#fff', display: 'flex', alignItems: 'center', marginBottom: '24px' }">
       <img src="../assets/logo.png" alt="Logo" style="height: 40px; margin-right: 20px" />
       <span style="font-size: 15px; color: #1E90FF">江苏牧职宠物管理系统</span>
+      <!-- 动态高亮菜单项 -->
       <a-menu
-          v-model:selectedKeys="selectedKeys"
+          :selectedKeys="selectedKeys"
           theme="light"
           mode="horizontal"
           :style="{ lineHeight: '64px', flexGrow: 1 }"
@@ -26,22 +27,21 @@
         </a-menu-item>
       </a-menu>
 
-      <!-- 头像下拉框，使用 margin-left: auto 推到最右边 -->
       <a-dropdown style="margin-left: auto">
         <a-avatar
             shape="circle"
-            src="https://hejiajun-img-bucket.oss-cn-wuhan-lr.aliyuncs.com/hm/56e55a4c-90d4-49c7-99e0-54a600f7afdd.jpg"
+            :src="user.avatarUrl"
         />
         <template #overlay>
           <a-menu>
             <a-menu-item>
-              <router-link to="/admin/management">后台管理</router-link>
+              <router-link to="/admin/petManagement">后台管理</router-link>
             </a-menu-item>
             <a-menu-item>
-              <router-link to="/admin/management">个人设置</router-link>
+              <router-link to="/user/setting">个人设置</router-link>
             </a-menu-item>
             <a-menu-item>
-              <router-link to="/admin/management">退出登录</router-link>
+              <router-link to="/user/login">退出登录</router-link>
             </a-menu-item>
           </a-menu>
         </template>
@@ -53,20 +53,56 @@
     </a-layout-content>
 
     <a-layout-footer style="text-align: center">
-      Ant Design ©2018 Created by Ant UED
+      Designed by 叶欣然
     </a-layout-footer>
   </a-layout>
 </template>
 
-<script lang="ts" setup>
-import {ref} from 'vue';
+<script lang="js" setup>
+import {onMounted, ref, watchEffect} from 'vue';
+import {useRoute} from 'vue-router';
+import {getCurrentUser} from "../services/user.js";
 
-const selectedKeys = ref<string[]>(['1']);
+const selectedKeys = ref([]);
+const route = useRoute();
 
+const user = ref({});
 
+// 使用 watchEffect 来监听路由变化并设置选中菜单项
+watchEffect(() => {
+  // 根据当前路由的 path 来设置选中的菜单项
+  switch (route.path) {
+    case '/':
+      selectedKeys.value = ['1'];
+      break;
+    case '/pet/adopt':
+      selectedKeys.value = ['2'];
+      break;
+    case '/pet/forum':
+      selectedKeys.value = ['3'];
+      break;
+    case '/pet/donate':
+      selectedKeys.value = ['4'];
+      break;
+    case '/activity':
+      selectedKeys.value = ['5'];
+      break;
+    default:
+      // 如果没有匹配到任何菜单项，清空选中项
+      selectedKeys.value = [];
+  }
+});
+
+onMounted(async () => {
+  if (!route.path.includes('/user/login') && !route.path.includes('/user/register')) {
+    const res = await getCurrentUser();
+    if (res) {
+      user.value = res;
+    }
+  }
+});
 </script>
 
 <style scoped>
-
 
 </style>

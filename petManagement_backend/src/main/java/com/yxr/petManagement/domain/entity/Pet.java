@@ -52,6 +52,11 @@ public class Pet implements Serializable {
     private String state;
 
     /**
+     * 品种
+     */
+    private String variety;
+
+    /**
      * 是否绝育（0 - 未绝育 1 - 已绝育）
      */
     private Integer isSterilized;

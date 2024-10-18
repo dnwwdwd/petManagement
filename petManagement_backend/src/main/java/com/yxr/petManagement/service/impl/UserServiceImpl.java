@@ -103,7 +103,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String address = user.getAddress();
         Date createTime = user.getCreateTime();
         String avatarUrl = user.getAvatarUrl();
-        String role = user.getRole();
         String sex = user.getSex();
         String birth = user.getBirth();
         User safetyUser = new User();
@@ -115,7 +114,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         safetyUser.setAddress(address);
         safetyUser.setCreateTime(createTime);
         safetyUser.setAvatarUrl(avatarUrl);
-        safetyUser.setRole(role);
         safetyUser.setSex(sex);
         safetyUser.setBirth(birth);
         return safetyUser;

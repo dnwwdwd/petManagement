@@ -15,6 +15,7 @@
             <result property="isSterilized" column="isSterilized" jdbcType="TINYINT"/>
             <result property="isVaccination" column="isVaccination" jdbcType="TINYINT"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="variety" column="variety" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>

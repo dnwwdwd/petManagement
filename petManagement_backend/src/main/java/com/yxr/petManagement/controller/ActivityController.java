@@ -5,14 +5,17 @@ import com.yxr.petManagement.common.DeleteRequest;
 import com.yxr.petManagement.common.ErrorCode;
 import com.yxr.petManagement.common.ResultUtils;
 import com.yxr.petManagement.domain.entity.Activity;
+import com.yxr.petManagement.domain.vo.ActivityVO;
 import com.yxr.petManagement.exception.BusinessException;
 import com.yxr.petManagement.service.ActivityService;
 import com.yxr.petManagement.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/activity")
@@ -53,9 +56,24 @@ public class ActivityController {
     }
 
     @GetMapping("/list")
-    public BaseResponse<List<Activity>> listActivities() {
+    public BaseResponse<List<ActivityVO>> listActivities() {
         List<Activity> activities = activityService.list();
-        return ResultUtils.success(activities);
+        List<ActivityVO> activityVOS = activities.stream().map(activity -> {
+            ActivityVO activityVO = new ActivityVO();
+            activityVO.setUser(userService.getById(activity.getUserId()));
+            BeanUtils.copyProperties(activity, activityVO);
+            return activityVO;
+        }).collect(Collectors.toList());
+        return ResultUtils.success(activityVOS);
+    }
+
+    @GetMapping("/detail/{id}")
+    public BaseResponse<ActivityVO> getActivityDetailById(@PathVariable("id") Integer id) {
+        Activity activity = activityService.getById(id);
+        ActivityVO activityVO = new ActivityVO();
+        activityVO.setUser(userService.getById(activity.getUserId()));
+        BeanUtils.copyProperties(activity, activityVO);
+        return ResultUtils.success(activityVO);
     }
 
 }

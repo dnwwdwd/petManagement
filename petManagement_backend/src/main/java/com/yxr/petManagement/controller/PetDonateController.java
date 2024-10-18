@@ -20,9 +20,6 @@ public class PetDonateController {
     @Resource
     private PetDonateService petDonateService;
 
-    @Resource
-    private UserService userService;
-
     @GetMapping("/pet/list")
     public BaseResponse<List<PetVO>> listPetDonateVO() {
         List<PetVO> petVOS = petDonateService.listPetDonateVO();

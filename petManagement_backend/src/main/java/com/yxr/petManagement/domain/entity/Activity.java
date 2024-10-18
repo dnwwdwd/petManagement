@@ -22,6 +22,11 @@ public class Activity implements Serializable {
     private Integer id;
 
     /**
+     * 用户 id
+     */
+    private Integer userId;
+
+    /**
      * 活动名称
      */
     private String name;
@@ -30,6 +35,11 @@ public class Activity implements Serializable {
      * 活动描述
      */
     private String description;
+
+    /**
+     * 图片地址
+     */
+    private String imgUrl;
 
     /**
      * 活动地点

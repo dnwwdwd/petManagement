@@ -18,9 +18,9 @@
       <div style="padding: 10px">
         <h3 style="font-size: 20px">状态：{{petVO.state}}</h3>
         <h3 style="font-size: 20px">描述：{{petVO.description}}</h3>
+        <h3 style="font-size: 20px">品种：{{petVO.variety}}</h3>
         <h3 style="font-size: 20px">是否绝育：{{petVO.isSterilized}}</h3>
         <h3 style="font-size: 20px">是否接种疫苗：{{petVO.isVaccination}}</h3>
-        <h3 style="font-size: 20px">联系电话：{{petVO.user.phone}}</h3>
       </div>
     </div>
   </div>

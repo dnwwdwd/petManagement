@@ -26,12 +26,15 @@ const router = useRouter();
 
 const petList = ref([]);
 
-
-onMounted(async () => {
+const loadData = async () => {
   const res = await myAxios.get('/donate/pet/list');
   if (res.code === 0) {
     petList.value = res.data;
   }
+};
+
+onMounted(async () => {
+  loadData();
 });
 
 </script>

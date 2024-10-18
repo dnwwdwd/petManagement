@@ -1,13 +1,13 @@
 <template>
-  <div style="max-width: 80%; display: flex; justify-content: center; align-items: center; margin: auto; padding: 20px">
-    <div style="width: 200px; ">
+  <div style="max-width: 80%; display: flex; justify-content: center; align-items: center; margin: auto; padding: 18px">
+    <div style="width: 180px">
       <a-image
-          :width="200"
+          :width="180"
           :src="petVO.avatarUrl"
           style="border-radius: 6%"
       />
     </div>
-    <div style="width: 60%;height: 300px; margin: 20px; border: 1px solid #e8e8e8;
+    <div style="width: 60%;height: 300px; margin: 18px; border: 1px solid #e8e8e8;
     border-radius: 5px; background-color: #f9f9f9; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
         <div style="padding: 12px">
           <span style="font-size: 27px">姓名：{{petVO.petName}}</span>
@@ -16,16 +16,17 @@
         </div>
         <a-divider />
       <div style="padding: 10px">
-        <h3 style="font-size: 20px">状态：{{petVO.state}}</h3>
-        <h3 style="font-size: 20px">描述：{{petVO.description}}</h3>
-        <h3 style="font-size: 20px">是否绝育：{{petVO.isSterilized}}</h3>
-        <h3 style="font-size: 20px">是否接种疫苗：{{petVO.isVaccination}}</h3>
+        <h3 style="font-size: 18px">状态：{{petVO.state}}</h3>
+        <h3 style="font-size: 18px">描述：{{petVO.description}}</h3>
+        <h3 style="font-size: 18px">品种：{{petVO.variety}}</h3>
+        <h3 style="font-size: 18px">是否绝育：{{petVO.isSterilized}}</h3>
+        <h3 style="font-size: 18px">是否接种疫苗：{{petVO.isVaccination}}</h3>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="font-size: 20px">联系电话：{{petVO.user.phone}}</h3>
+          <h3 style="font-size: 18px">联系电话：{{petVO.user.phone}}</h3>
           <a-button style="color: lightgreen" @click="showModal">申请领养</a-button>
           <a-modal v-model:open="open" title="申请领养" :confirm-loading="confirmLoading" @ok="handleOk">
-            申请理由：<a-input v-model="formModal.reason" class="a-input"/>
-            你觉得自己的优势是什么：<a-input v-model="formModal.advantage"  class="a-input"/>
+            申请理由：<a-input v-model:value="formModal.reason" class="a-input"/>
+            你觉得自己的优势是什么：<a-input v-model:value="formModal.advantage"  class="a-input"/>
           </a-modal>
         </div>
       </div>
@@ -51,7 +52,7 @@ const petVO = ref({
 
 const formModal = ref({
   reason: '',
-  id: petVO.id,
+  id: id,
   advantage: '',
 });
 
@@ -67,6 +68,8 @@ const showModal = () => {
 };
 
 const handleOk = async () => {
+  alert(formModal.value)
+  console.log(formModal.value)
   const res = await myAxios.post('/adopt/pet', {
     id: formModal.value.id,
   });
