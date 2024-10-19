@@ -12,7 +12,7 @@
     border-radius: 5px; background-color: #f9f9f9; box-shadow: 8px 8px 8px rgba(255, 192, 203, 0.5);">
       <div style="padding: 20px">
         <span style="font-size: 27px">{{ activityVO.name }}</span>
-        <span style="margin-left: 10px; font-size: 15px">{{ activityVO.startTime }} ~ {{ activityVO.endTime }}</span>
+        <span style="margin-left: 10px; font-size: 15px">活动时间：{{ activityVO.startTime }} ~ {{ activityVO.endTime }}</span>
       </div>
       <a-divider/>
       <div style="padding: 10px">

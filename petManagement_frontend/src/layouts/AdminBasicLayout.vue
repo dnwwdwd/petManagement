@@ -1,7 +1,10 @@
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
+      <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px; margin-bottom: 5px;">
+        <img src="../assets/logo.png" width="52" height="50" style="margin-right: 10px;"/>
+        <span style="color: pink">江苏牧职宠物管理系统</span>
+      </div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <router-link to="/admin/petManagement">
@@ -44,7 +47,7 @@
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0; height: 60px">
         <div style="display: flex; justify-content: space-between; align-items: center">
-          <span>{{ title }}</span>
+          <span style="font-size: 20px; margin-left: 20px; color: #1E90FF">{{ title }}</span>
           <div style="margin-right: 30px">
             <a-dropdown >
               <a-avatar
@@ -54,13 +57,13 @@
               <template #overlay>
                 <a-menu>
                   <a-menu-item>
-                    <router-link to="/admin/petManagement">后台管理</router-link>
+                    <router-link to="/">前台页面</router-link>
                   </a-menu-item>
                   <a-menu-item>
                     <router-link to="/user/setting">个人设置</router-link>
                   </a-menu-item>
                   <a-menu-item>
-                    <router-link to="/user/login">退出登录</router-link>
+                    <router-link to="/user/login" @click="userLogout">退出登录</router-link>
                   </a-menu-item>
                 </a-menu>
               </template>
@@ -77,7 +80,7 @@
     </a-layout>
   </a-layout>
 </template>
-<script lang="ts" setup>
+<script lang="js" setup>
 import {
   VideoCameraAddOutlined,
   DesktopOutlined,
@@ -85,17 +88,58 @@ import {
   FormOutlined,
   CommentOutlined,
 } from '@ant-design/icons-vue';
-import {onMounted, ref} from 'vue';
-import {useRoute} from "vue-router";
+import {onMounted, ref, watchEffect} from 'vue';
+import {useRoute, useRouter} from "vue-router";
 import {getCurrentUser} from "../services/user.js";
+import {message} from "ant-design-vue";
+import myAxios from "../plugins/myAxios.js";
+import routes from "../route/index.js";
 
-const collapsed = ref<boolean>(false);
-const selectedKeys = ref<string[]>(['1']);
+const collapsed = ref(false);
+const selectedKeys = ref([]);
 
+const title = ref('');
 
 const route = useRoute();
+const router = useRouter();
 
 const user = ref({});
+
+watchEffect(() => {
+  // 根据当前路由的 path 来设置选中的菜单项
+  switch (route.path) {
+    case '/admin/petManagement':
+      selectedKeys.value = ['1'];
+      break;
+    case '/admin/petAdoptManagement':
+      selectedKeys.value = ['2'];
+      break;
+    case '/admin/petDonateManagement':
+      selectedKeys.value = ['3'];
+      break;
+    case '/admin/petForumManagement':
+      selectedKeys.value = ['4'];
+      break;
+    case '/admin/activityManagement':
+      selectedKeys.value = ['5'];
+      break;
+    case '/admin/userManagement':
+      selectedKeys.value = ['6'];
+      break;
+    default:
+      // 如果没有匹配到任何菜单项，清空选中项
+      selectedKeys.value = [];
+  }
+});
+
+router.beforeEach((to, from) => {
+  routes.forEach(route => {
+    if (to.path === route.path) {
+      title.value = route.title;
+      console.log(route.title)
+    }
+  });
+});
 
 onMounted(async () => {
   if (!route.path.includes('/user/login') && !route.path.includes('/user/register')) {
@@ -106,7 +150,17 @@ onMounted(async () => {
   }
 });
 
+const userLogout = async () => {
+  const res = await myAxios.post('/user/logout');
+  if (res.code === 0) {
+    message.success('退出成功');
+  } else {
+    message.error('退出失败');
+  }
+};
+
 </script>
+
 <style scoped>
 #components-layout-demo-side .logo {
   height: 32px;

@@ -5,6 +5,7 @@ import com.yxr.petManagement.common.DeleteRequest;
 import com.yxr.petManagement.common.ErrorCode;
 import com.yxr.petManagement.common.ResultUtils;
 import com.yxr.petManagement.domain.entity.Activity;
+import com.yxr.petManagement.domain.entity.User;
 import com.yxr.petManagement.domain.vo.ActivityVO;
 import com.yxr.petManagement.exception.BusinessException;
 import com.yxr.petManagement.service.ActivityService;
@@ -32,6 +33,8 @@ public class ActivityController {
         if (!userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
+        User loginUser = userService.getLoginUser(request);
+        activity.setUserId(loginUser.getId());
         activityService.save(activity);
         return ResultUtils.success(activity.getId());
     }

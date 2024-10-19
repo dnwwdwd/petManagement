@@ -14,7 +14,6 @@
           <span style="font-size: 27px">姓名：{{petVO.petName}}</span>
           <span style="margin-left: 10px; font-size: 15px">{{petVO.sex}}</span>
           <span style="margin-left: 10px; font-size: 15px">{{petVO.age}} 周岁</span>
-          <span style="margin-left: 10px; font-size: 15px">捐赠人：{{petVO.donateUser.nickname}}</span>
         </div>
         <a-divider />
       <div style="padding: 10px">
@@ -24,8 +23,12 @@
         <h3 style="font-size: 18px">是否绝育：{{petVO.isSterilized}}</h3>
         <h3 style="font-size: 18px">是否接种疫苗：{{petVO.isVaccination}}</h3>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="font-size: 18px">领养人：{{petVO.adoptUser.nickname}}</h3>
-          <a-button style="color: lightgreen">已领养</a-button>
+          <h3 style="font-size: 18px">联系电话：{{petVO.user.phone}}</h3>
+          <a-button style="color: lightgreen" @click="showModal">申请领养</a-button>
+          <a-modal v-model:open="open" title="申请领养" :confirm-loading="confirmLoading" @ok="handleOk">
+            申请理由：<a-input v-model:value="formModal.reason" class="a-input"/>
+            你觉得自己的优势是什么：<a-input v-model:value="formModal.advantage"  class="a-input"/>
+          </a-modal>
         </div>
       </div>
     </div>
@@ -45,8 +48,7 @@ const route = useRoute();
 const id = route.params.id;
 
 const petVO = ref({
-  donateUser: {},
-  adoptUser: {}
+  user: {}
 });
 
 const formModal = ref({
@@ -56,7 +58,7 @@ const formModal = ref({
 });
 
 onMounted(async () => {
-  const res = await myAxios.get(`/adopt/detail/info/${id}`);
+  const res = await myAxios.get(`/donate/detail/${id}`);
   if (res.data) {
     petVO.value = res.data;
   }
@@ -67,8 +69,6 @@ const showModal = () => {
 };
 
 const handleOk = async () => {
-  alert(formModal.value)
-  console.log(formModal.value)
   const res = await myAxios.post('/adopt/pet', {
     id: formModal.value.id,
   });

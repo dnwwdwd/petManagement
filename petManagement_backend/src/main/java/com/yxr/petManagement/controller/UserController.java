@@ -1,7 +1,9 @@
 package com.yxr.petManagement.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yxr.petManagement.common.BaseResponse;
+import com.yxr.petManagement.common.DeleteRequest;
 import com.yxr.petManagement.common.ErrorCode;
 import com.yxr.petManagement.common.ResultUtils;
 import com.yxr.petManagement.domain.entity.User;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
+
+import static com.yxr.petManagement.constant.UserConstant.USER_LOGIN_STATE;
 
 
 @RestController
@@ -51,6 +57,45 @@ public class UserController {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         return ResultUtils.success(userService.updateById(user));
+    }
+
+    @PostMapping("/logout")
+    public BaseResponse<Integer> userLogout(HttpServletRequest request) {
+        if (request == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return ResultUtils.success(1);
+    }
+
+    @GetMapping("/list")
+    public BaseResponse<List<User>> listCommonUser(HttpServletRequest request) {
+        if (!userService.isAdmin(request)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role", "ROLE_USER");
+        List<User> users = userService.list(queryWrapper);
+        return ResultUtils.success(users);
+    }
+
+    @PostMapping("/add")
+    public BaseResponse<Integer> addUser(@RequestBody User user, HttpServletRequest request) {
+        if (!userService.isAdmin(request)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        user.setRole("ROLE_USER");
+        userService.save(user);
+        return ResultUtils.success(user.getId());
+    }
+
+    @PostMapping("/delete")
+    public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
+        if (!userService.isAdmin(request)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        int id = deleteRequest.getId();
+        return ResultUtils.success(userService.removeById(id));
     }
 
 }

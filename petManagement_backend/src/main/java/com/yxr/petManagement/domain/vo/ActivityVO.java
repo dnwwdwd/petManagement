@@ -42,6 +42,8 @@ public class ActivityVO implements Serializable {
 
     private User user;
 
+    private Integer userId;
+
     private static final long serialVersionUID = 1L;
 
 }

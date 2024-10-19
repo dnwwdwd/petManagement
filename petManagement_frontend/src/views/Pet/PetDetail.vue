@@ -1,8 +1,9 @@
 <template>
   <div style="max-width: 80%; display: flex; justify-content: center; align-items: center; margin: auto; padding: 20px">
-    <div style="width: 200px; ">
+    <div style="width: 270px; ">
       <a-image
-          :width="200"
+          :width="240"
+          :height="300"
           :src="petVO.avatarUrl"
           style="border-radius: 6%"
       />

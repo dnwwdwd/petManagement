@@ -1,6 +1,6 @@
 <template>
-  <a-button type="primary" class="editable-add-btn" style="margin-bottom: 8px; margin-top: 12px" @click="handleAdd">添加宠物</a-button>
-  <a-modal v-model:open="open" title="添加宠物" @ok="handleOk" cancelText="取消" okText="确认添加">
+  <a-button type="primary" class="editable-add-btn" style="margin-bottom: 8px; margin-top: 12px" @click="handleAdd">添加宠物捐赠</a-button>
+  <a-modal v-model:open="open" title="添加宠物捐赠" @ok="handleOk" cancelText="取消" okText="确认添加">
     宠物名称：<a-input v-model:value="formModal.petName" class="a-input"/>
     年龄：<a-input v-model:value="formModal.age" class="a-input"/>
     性别：<a-input v-model:value="formModal.sex" class="a-input"/>
@@ -93,12 +93,12 @@ const columns = [
   {
     title: '年龄',
     dataIndex: 'age',
-    width: '10%',
+    width: '5%',
   },
   {
     title: '性别',
     dataIndex: 'sex',
-    width: '10%',
+    width: '5%',
   },
   {
     title: '状态',
@@ -113,6 +113,11 @@ const columns = [
   {
     title: '品种',
     dataIndex: 'variety',
+    width: '5%',
+  },
+  {
+    title: '捐赠人 ID',
+    dataIndex: 'userId',
     width: '10%',
   },
   {
@@ -157,7 +162,7 @@ const save = async (key) => {
   // 编辑保存后的新值
   const editedData = editableData[key];
   // 请求后端更新数据
-  const res = await myAxios.post('/pet/update', editedData);
+  const res = await myAxios.post('/donate/update', editedData);
   if (res.code === 0) {
     Object.assign(dataSource.value.find(item => item.key === key), editedData);
     message.success('修改成功');
@@ -176,7 +181,7 @@ const cancel = (key) => {
 const onDelete = async (key) => {
   const item = dataSource.value.find(item => item.key === key);
   // 请求后端删除数据
-  const res = await myAxios.post('/pet/delete', {
+  const res = await myAxios.post('/donate/delete', {
     id: item.id,
   });
   if (res.code === 0) {
@@ -207,7 +212,7 @@ const handleAdd = () => {
 
 const handleOk = async () => {
     // 请求后端，添加表格项
-    const result = await myAxios.post('/pet/add', formModal.value);
+    const result = await myAxios.post('/donate/pet', formModal.value);
     if (result.code == 0) {
       message.success('添加成功');
       open.value = false;
@@ -219,7 +224,7 @@ const handleOk = async () => {
 };
 
 const loadData = async () => {
-  const res = await myAxios.get('/pet/list');
+  const res = await myAxios.get('/donate/pet/list');
   if (res.code === 0) {
     dataSource.value = res.data.map((item, index) => ({
       ...item,
