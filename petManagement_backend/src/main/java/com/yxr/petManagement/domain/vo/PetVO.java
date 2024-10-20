@@ -57,6 +57,8 @@ public class PetVO implements Serializable {
      */
     private Integer isVaccination;
 
+    private Integer type;
+
     /**
      * 描述
      */

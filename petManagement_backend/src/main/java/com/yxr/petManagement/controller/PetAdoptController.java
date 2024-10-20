@@ -86,13 +86,19 @@ public class PetAdoptController {
     public BaseResponse<List<PetAdoptVO>> lisPetAdopts() {
         List<PetAdopt> petAdopts = petAdoptService.list();
         List<Integer> adoptedUserIds = petAdopts.stream().map(PetAdopt::getUserId).collect(Collectors.toList());
-        List<User> adoptedUsers = userService.listByIds(adoptedUserIds);
+        List<User> adoptedUsers = new ArrayList<>();
+        for (int adoptedUserId : adoptedUserIds) {
+            adoptedUsers.add(userService.getById(adoptedUserId));
+        }
         List<Integer> petIds = petAdopts.stream().map(PetAdopt::getPetId).collect(Collectors.toList());
         List<PetDonate> petDonates = petDonateService.listByIds(petIds);
         List<Integer> donatedUserIds = petDonates.stream().map(PetDonate::getUserId).collect(Collectors.toList());
-        List<User> donatedUsers = userService.listByIds(donatedUserIds);
+        List<User> donatedUsers = new ArrayList<>();
+        for (int donatedUserId : donatedUserIds) {
+            donatedUsers.add(userService.getById(donatedUserId));
+        }
         List<PetAdoptVO> list = new ArrayList<>();
-        for (int i=0;i<petDonates.size();i++) {
+        for (int i = 0; i < petDonates.size(); i++) {
             PetAdoptVO petAdoptVO = new PetAdoptVO();
             petAdoptVO.setDonateUser(donatedUsers.get(i));
             petAdoptVO.setAdoptUser(adoptedUsers.get(i));
