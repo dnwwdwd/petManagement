@@ -8,13 +8,13 @@
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <router-link to="/admin/petManagement">
-            <FormOutlined />
+            <RedditOutlined />
             <span>宠物管理</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="2">
           <router-link to="/admin/petAdoptManagement">
-            <desktop-outlined />
+            <FormOutlined />
             <span>宠物领养管理</span>
           </router-link>
         </a-menu-item>
@@ -82,6 +82,7 @@
 </template>
 <script lang="js" setup>
 import {
+  RedditOutlined,
   VideoCameraAddOutlined,
   DesktopOutlined,
   UserOutlined,

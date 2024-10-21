@@ -2,13 +2,13 @@
   <div style="max-width: 80%; display: flex; justify-content: center; align-items: center; margin: auto; padding: 18px">
     <div style="width: 200px">
       <a-image
-          :width="200"
-          :height="270"
+          :width="210"
+          :height="320"
           :src="petVO.avatarUrl"
           style="border-radius: 6%"
       />
     </div>
-    <div style="width: 60%;height: 300px; margin: 18px; border: 1px solid #e8e8e8;
+    <div style="width: 60%;height: 340px; margin: 18px; border: 1px solid #e8e8e8;
     border-radius: 5px; background-color: #f9f9f9; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
         <div style="padding: 12px">
           <span style="font-size: 27px">姓名：{{petVO.petName}}</span>
@@ -18,10 +18,11 @@
         <a-divider />
       <div style="padding: 10px">
         <h3 style="font-size: 18px">状态：{{petVO.state}}</h3>
+        <h3 style="font-size: 18px">捐赠人：{{petVO.user.nickname}}</h3>
         <h3 style="font-size: 18px">描述：{{petVO.description}}</h3>
         <h3 style="font-size: 18px">品种：{{petVO.variety}}</h3>
-        <h3 style="font-size: 18px">是否绝育：{{petVO.isSterilized}}</h3>
-        <h3 style="font-size: 18px">是否接种疫苗：{{petVO.isVaccination}}</h3>
+        <h3 style="font-size: 18px">是否绝育：{{petVO.isSterilized === 0 ? '否' : '是'}}</h3>
+        <h3 style="font-size: 18px">是否接种疫苗：{{petVO.isVaccination === 0 ? '否' : '是'}}</h3>
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <h3 style="font-size: 18px">联系电话：{{petVO.user.phone}}</h3>
           <a-button style="color: lightgreen" @click="showModal">申请领养</a-button>

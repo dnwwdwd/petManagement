@@ -37,10 +37,6 @@ public class PetForumController {
 
     @PostMapping("/add")
     public BaseResponse<Integer> addPetForum(@RequestBody PetForum petForum, HttpServletRequest request) {
-        boolean isAdmin = userService.isAdmin(request);
-        if (!isAdmin) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
         User loginUser = userService.getLoginUser(request);
         petForum.setUserId(loginUser.getId());
         petForumService.save(petForum);

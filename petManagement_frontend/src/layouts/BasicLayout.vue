@@ -64,6 +64,12 @@
           <a-select-option value="2">仓鼠</a-select-option>
         </a-select>
       </a-modal>
+      <a-button style="color: plum; margin-right: 20px" @click="showPetForumModal">发布论坛</a-button>
+      <a-modal v-model:open="petForumOpen" title="发布论坛" @ok="handlePetForumOk" cancelText="取消" okText="确认发布">
+        论坛名称：<a-input v-model:value="petForumModal.name" class="a-input"/>
+        论坛描述：<a-input v-model:value="petForumModal.description" class="a-input"/>
+        图片：<a-input v-model:value="petForumModal.imgUrl" class="a-input"/>
+      </a-modal>
       <a-dropdown style="margin-left: auto">
         <a-avatar
             shape="circle"
@@ -85,7 +91,7 @@
       </a-dropdown>
     </a-layout-header>
 
-    <a-layout-content style="padding: 0 50px; height: 600px">
+    <a-layout-content style="padding: 0 50px; height: 600px; background-image: url('../assets/bg.png'); !important;">
       <router-view />
     </a-layout-content>
 
@@ -153,6 +159,8 @@ const userLogout = async () => {
 
 const open = ref(false);
 
+const petForumOpen = ref(false);
+
 const formModal = ref({
   petName: '',
   age: '',
@@ -166,17 +174,33 @@ const formModal = ref({
   variety: '',
 });
 
+const petForumModal = ref({
+  name: '',
+  imgUrl: '',
+  description: '',
+});
+
 const showModal = () => {
   open.value = true;
 };
 
+const showPetForumModal = () => {
+  petForumOpen.value = true;
+};
+
 const handleOk = async () => {
-  console.log('Submitted data:', formModal.value);
-  console.log('Submitted data:', petName.value);
   const res = await myAxios.post('/donate/pet', formModal.value);
   if (res.code === 0) {
     open.value = false;
-    loadData();
+    window.location.reload();
+  }
+};
+
+const handlePetForumOk = async () => {
+  const res = await myAxios.post('/pet/forum/add', petForumModal.value);
+  if (res.code === 0) {
+    petForumOpen.value = false;
+    window.location.reload();
   }
 };
 

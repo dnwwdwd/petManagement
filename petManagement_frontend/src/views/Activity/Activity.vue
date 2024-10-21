@@ -7,6 +7,7 @@
           <template #extra>
             <img
                 height="100px"
+                width="120px"
                 alt="logo"
                 :src="item.imgUrl"
             />
